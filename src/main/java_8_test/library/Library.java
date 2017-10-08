@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Library {
     public static void main(String[] args) {
@@ -26,6 +29,12 @@ public class Library {
                 .setAuthor("Henryk Sienkiewicz")
                 .setYearOfPublication(2003)
                 .setCategory(Category.history)
+                .getBook());
+        books.add(new BookBuilder()
+                .setCategory(Category.adventure)
+                .setYearOfPublication(2001)
+                .setTitle("Jakiśtam")
+                .setAuthor("Jan Kowalski")
                 .getBook());
 
         System.out.println("books before 2000:");
@@ -59,5 +68,17 @@ public class Library {
                 .filter(b -> b.getCategory().equals(Category.adventure))
                 .findAny()
                 .ifPresent(b -> System.out.println(b.presentBook()));
+
+        HashMap<Category, List<Book>> categorizedBooks = new HashMap<>();
+        for (Category category : Category.values()) {
+            categorizedBooks.put(category, books.stream()
+                    .filter(b -> b.getCategory().equals(category))
+                    .collect(toList()));
+        }
+        System.out.println();
+        for (Category category : Category.values()) {
+            System.out.println(category.toString() + ":");
+            categorizedBooks.get(category).forEach(b -> System.out.println(b.presentBook()));
+        }
     }
 }
