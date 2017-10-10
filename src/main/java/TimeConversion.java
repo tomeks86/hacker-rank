@@ -1,4 +1,9 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
 import java.text.*;
 import java.math.*;
@@ -26,9 +31,23 @@ public class TimeConversion {
     }
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String s = in.next();
+        /*Scanner in = new Scanner(System.in);
+        String s = in.next();*/
+        String s = "12:00:01AM";
         String result = timeConversion(s);
         System.out.println(result);
+
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        System.out.println(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)));
+        System.out.println(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)));
+        System.out.println(date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG)));
+        System.out.println(time.format(DateTimeFormatter.ofPattern("hh:mm:ssa")));
+        //String test = time.format(DateTimeFormatter.ofPattern("hh:mm:ssa"));
+        //System.out.println(timeConversion(test));
+        LocalTime time2 = LocalTime.parse(s, DateTimeFormatter.ofPattern("hh:mm:ssa"));
+        System.out.println();
+        System.out.println(time2.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 }
