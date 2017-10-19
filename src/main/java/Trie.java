@@ -5,11 +5,15 @@ public class Trie {
         private HashMap<Character, Node> letters;
         private int count = 0;
         private boolean isWord = false;
+
+        private Node() {
+            letters = new HashMap<>();
+        }
     }
 
-    private Node root;
+    private Node root = new Node();
 
-    public void addWord(String word) {
+    public boolean addWord(String word) {
         Node current = root;
         for (char character : word.toCharArray()) {
             current.count++;
@@ -20,5 +24,24 @@ public class Trie {
             }
         }
         current.isWord = true;
+        return true;
+    }
+
+    public boolean searchWord(String word) {
+        Node current = root;
+        for (char character : word.toCharArray()) {
+            if (current.letters.get(character) != null) current = current.letters.get(character);
+            else return false;
+        }
+        return current.isWord;
+    }
+
+    public int howManyWords(String word) {
+        Node current = root;
+        for (char character : word.toCharArray()) {
+            if (current.letters.get(character) != null) current = current.letters.get(character);
+            else return 0;
+        }
+        return current.count;
     }
 }
