@@ -14,17 +14,20 @@ public class Trie {
     private Node root = new Node();
 
     public boolean addWord(String word) {
-        Node current = root;
-        for (char character : word.toCharArray()) {
-            current.count++;
-            if (current.letters.get(character) == null) {
-                current.letters.put(character, current = new Node());
-            } else {
-                current = current.letters.get(character);
+        if (!searchWord(word)) {
+            Node current = root;
+            for (char character : word.toCharArray()) {
+                current.count++;
+                if (current.letters.get(character) == null) {
+                    current.letters.put(character, current = new Node());
+                } else {
+                    current = current.letters.get(character);
+                }
             }
-        }
-        current.isWord = true;
-        return true;
+            current.isWord = true;
+            current.count++;
+            return true;
+        } else return false;
     }
 
     public boolean searchWord(String word) {

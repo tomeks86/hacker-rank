@@ -58,4 +58,11 @@ public class TrieTest {
         assertEquals(testObject.howManyWords("ab"), 3);
     }
 
+    @Test
+    public void shouldNotAddTheSameWord() {
+        testObject.addWord("abc");
+        testObject.addWord("abc");
+        assertEquals(testObject.howManyWords("abc"), 1);
+    }
+
 }
