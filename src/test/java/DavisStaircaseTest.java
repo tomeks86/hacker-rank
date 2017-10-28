@@ -1,10 +1,14 @@
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(JUnitParamsRunner.class)
 public class DavisStaircaseTest {
     private DavisStaircase testedObject;
 
@@ -53,12 +57,35 @@ public class DavisStaircaseTest {
         assertEquals(testedObject.calcPossibilities(4), 7);
     }
 
-    @Test
+    /*@Test
     public void solutionsShouldBeEqual() {
         int n = 17;
         int iter = (int) testedObject.calcPossibilities(n);
         int rec = testedObject.calcPossibilitiesRec(n);
         assertEquals(iter, rec);
+    }*/
+
+    @Test
+    @Parameters({"1, 1",
+                "2, 2",
+                "3, 4",
+                "4, 7"})
+    public void shouldGiveCorrectResult(int stairs, int solutions) {
+        assertEquals(testedObject.calcPossibilitiesRec(stairs), solutions);
     }
 
+    private Object[][] parametersForTest() {
+        return new Object[][] {
+                {1, 1},
+                {2, 2},
+                {3, 4},
+                {4, 7}
+        };
+    }
+
+    @Test
+    @Parameters(method = "parametersForTest")
+    public void shouldReturnCorrectResult(int in, int out) {
+        assertEquals(testedObject.calcPossibilitiesRec(in), out);
+    }
 }
